@@ -1,58 +1,61 @@
+import { useState } from 'react';
+import home from './assets/compsants/home';
+import game from './assets/compsants/game';
+import path from './assets/compsants/path';
+import rules from './assets/compsants/rules';
 
 const App = () => {
+  const [currentPage, setCurrentPage] = useState('home');
+
+  const renderComponent = () => {
+    switch (currentPage) {
+      case  'home':
+        return home();
+      case 'game':
+        return game();
+      case 'path':
+        return path();
+      case 'rules':
+        return rules();
+      default:
+        return home();
+    }
+  };
+
+  const goNextPage = () => {
+    const pages = ['home', 'game', 'path', 'rules'];
+    const currentIndex = pages.indexOf(currentPage);
+    const nextIndex = (currentIndex + 1) % pages.length;
+    setCurrentPage(pages[nextIndex]);
+  }
+
   return (
     <>
-      <header>
+      <div className='header'>
         <div id="floting-menu">
-          <div className='menu-button'>
-              <img src="logo.png" alt="Logo" />
+          <div className='logo'>
+            <img src="logo.png" alt="Logo" />
           </div>
-          <div className='menu-button'>
+          <div className='menu-button' onClick={() => setCurrentPage('home')}>
             Home
           </div>
-          <div className='menu-button'>
+          <div className='menu-button' onClick={() => setCurrentPage('game')}>
             Students
           </div>
-          <div className='menu-button'>
+          <div className='menu-button' onClick={() => setCurrentPage('path')}>
             Path
           </div>
-          <div className='menu-button'>
+          <div className='menu-button' onClick={() => setCurrentPage('rules')}>
             Rules
           </div>
         </div>
-      </header>
-      <body>
-        <div id="main-content">
-          <h1>Notre village</h1>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo, saepe incidunt ea eos voluptate earum consequatur ipsam dolorum quisquam atque esse in eveniet quo nesciunt accusantium quod doloremque mollitia blanditiis.</p>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, quo expedita esse quis commodi reiciendis! Eaque expedita distinctio magni. Incidunt, iste. Hic incidunt voluptatem eum repudiandae quam pariatur rerum officiis!
-          Corrupti reprehenderit recusandae consectetur odit unde omnis distinctio praesentium eum perferendis, accusantium libero porro dignissimos hic quisquam cum facere officiis odio vitae architecto ea dolorum quod numquam. Molestiae, debitis perspiciatis.
-          Suscipit iste reiciendis nisi voluptas? Facilis reiciendis itaque odio inventore beatae, possimus alias quos provident labore, laudantium facere culpa corporis esse accusamus ea sequi vero fuga minus nihil perferendis. At.</p>
-        </div>
-          <li id="team-members">
-            <ul>
-              <div className="member-card">
-                <img src="member1.jpg" alt="Member 1" className="member-photo" />
-                <h2 className="member-name">Iulian</h2>
-                <p className="member-role">dev</p>
-              </div>
-            </ul>
-            <ul>
-              <div className="member-card">
-                <img src="member2.jpg" alt="Member 2" className="member-photo" />
-                <h2 className="member-name">Gigi</h2>
-                <p className="member-role">yapper</p>
-              </div>
-            </ul>
-            <ul>
-              <div className="member-card">
-                <img src="member3.jpg" alt="Member 3" className="member-photo" />
-                <h2 className="member-name">Sara</h2>
-                <p className="member-role">designer</p>
-              </div>
-            </ul>
-          </li>
-      </body>
+      </div>
+      <main>
+        {renderComponent()}
+      </main>
+      <div className="footer">
+        <button id="button-changepage" onClick={() => goNextPage()}>Next page</button>
+      </div>
     </>
   );
 };
