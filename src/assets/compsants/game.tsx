@@ -1,5 +1,5 @@
-const minigame = () => {
+  const Game = () => {
   return <div>Minigame Component</div>;
 }
 
-export default minigame;
+export default Game;

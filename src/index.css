@@ -4,13 +4,13 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgba(0, 0, 0, 0.747);
+  background-color: #faf3f3;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  display: flex;
+  display: flex; 
   flex-direction: column;
   align-items: center;
   width: 100%;
@@ -19,13 +19,13 @@
 }
 
 #floting-menu {
-  background-color: #000000;
+  background-color: #ffffff;
   height: 60px;
   display: flex;
   align-items: center;
   padding: 0 20px;
-  color: rgb(250, 144, 5);
-  border: #e7a006 2px solid;
+  color: rgb(0, 0, 0);
+  border: #ffe600 2px solid;
   border-radius: 16px;
   width: 95%;
   justify-content: space-evenly;
@@ -58,7 +58,7 @@
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, rgba(231,160,6,0.18), rgba(6, 179, 231, 0.185));
+  background: linear-gradient(90deg, rgba(255, 230, 0, 0.384), rgba(6, 179, 231, 0.452));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 420ms cubic-bezier(.2,.9,.2,1);
@@ -87,9 +87,9 @@
   max-width: 90%;
   margin: 40px;
   padding: 20px;
-  background-color: #1e1e1e;
+  background-color: #ffffff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(255, 251, 6, 0.3);
 
 }
 
@@ -110,16 +110,16 @@
 }
 
 .member-card {
-  background-color: #2a2a2a;
-  border: 1px solid #444;
+  background-color: #ffffff;
+  border: 1px solid #fff45e38;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 8px rgba(255, 251, 1, 0.932);
 }
 
 #button-changepage {
-  background-color: #e7a006;
+  background-color: #ffd900;
   color: #000;
   border: none;
   width: 80%;
@@ -127,14 +127,14 @@
   padding: 12px 24px;
   font-size: 16px;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(255, 251, 6, 0.3);
   transition: background-color 200ms ease, transform 100ms ease;
   display: block;
   margin: 0 auto;
 }
 
 #button-changepage:hover {
-  background-color: #ffb732;
+  background-color: #ff0202;
   transform: translateY(-2px);
 }
 #button-changepage:active {
@@ -143,4 +143,221 @@
 #button-changepage:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(231,160,6,0.18), 0 8px 20px rgba(6, 164, 255, 0.164);
+}
+.member-photo {
+  height: 40px;
+  width: auto;
+}
+#logo{
+  height: 32px;
+  width: auto;
+}
+#cheminement{
+  width: 100%;
+  height: auto;
+}
+
+/* Image Container and Glow Effect */
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.glow-image {
+  cursor: default;
+  border-radius: 12px;
+  transition: filter 0.25s ease, transform 0.25s ease;
+  max-width: 100%;
+  height: auto;
+  border: none;
+  box-shadow: none;
+  filter: none;
+  will-change: filter, transform;
+  background: transparent;
+}
+
+.glow-image.glow-active {
+  cursor: pointer;
+  /* Alpha-respecting glow following the image silhouette */
+  filter: drop-shadow(0 0 6px rgba(6, 179, 231, 0.65))
+          drop-shadow(0 0 14px rgba(6, 179, 231, 0.45))
+          drop-shadow(0 0 22px rgba(6, 179, 231, 0.3));
+  transform: scale(1.01);
+}
+
+.glow-image.glow-active:active {
+  transform: scale(0.99);
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-content {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+  border: 2px solid #ffe600;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 2px solid #ffe600;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* Divisions Grid */
+.divisions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 24px;
+}
+
+.division-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.division-option:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.division-option.selected {
+  border-width: 3px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15),
+              inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.division-option input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.division-option label {
+  cursor: pointer;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Modal Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 24px;
+  border-top: 2px solid #ffe600;
+  background-color: #f9f9f9;
+}
+
+.btn-cancel,
+.btn-confirm {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-cancel {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.btn-cancel:hover {
+  background-color: #e0e0e0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #ffe600 0%, #ffb800 100%);
+  color: #333;
+}
+
+.btn-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 230, 0, 0.4);
+}
+
+.btn-confirm:active {
+  transform: translateY(0);
 }

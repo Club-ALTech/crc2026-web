@@ -1,4 +1,4 @@
-const home = () => {
+const Home = () => {
     return (
         <>
             <div className="body">
@@ -39,4 +39,4 @@ const home = () => {
     )
 }
 
-export default home
+export default Home

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import home from './assets/compsants/home';
-import game from './assets/compsants/game';
-import path from './assets/compsants/path';
-import rules from './assets/compsants/rules';
+import Home from './assets/compsants/home';
+import Game from './assets/compsants/game';
+import Path from './assets/compsants/path';
+import Rules from './assets/compsants/rules';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
@@ -10,15 +10,15 @@ const App = () => {
   const renderComponent = () => {
     switch (currentPage) {
       case  'home':
-        return home();
+        return <Home />;
       case 'game':
-        return game();
+        return <Game />;
       case 'path':
-        return path();
+        return <Path />;
       case 'rules':
-        return rules();
+        return <Rules />;
       default:
-        return home();
+        return <Home />;
     }
   };
 
@@ -34,13 +34,13 @@ const App = () => {
       <div className='header'>
         <div id="floting-menu">
           <div className='logo'>
-            <img src="logo.png" alt="Logo" />
+            <img src="src/assets/IMG_2037.png" id='logo' alt="Logo" onClick={() => setCurrentPage('home')} />
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('home')}>
             Home
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('game')}>
-            Students
+            Mini game
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('path')}>
             Path
