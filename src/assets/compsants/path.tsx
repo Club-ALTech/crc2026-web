@@ -1,141 +1,146 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+
+type LineHotspot = {
+  id: string;
+  title: string;
+  top: string;
+  left: string;
+  width: string;
+  angle?: number;
+  details: string;
+};
+
+const lineHotspots: LineHotspot[] = [
+  {
+    id: 'line-1-0',
+    title: 'Robot',
+    top: '44%',
+    left: '30%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Robot.',
+  },
+  {
+    id: 'line-1-1',
+    title: 'Kiosk',
+    top: '35%', 
+    left: '37%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Kiosk.',
+  },
+  {
+    id: 'line-1-2',
+    title: 'Vidéo',
+    top: '35%',
+    left: '50%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Vidéo.',
+  },
+  {
+    id: 'line-1-3',
+    title: 'Site web ',
+    top: '44%',
+    left: '57%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Site web .',
+  },
+  {
+    id: 'line-2',
+    title: 'Rencontre 1',
+    top: '60%',
+    left: '43%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Rencontre 1.',
+  },
+  {
+    id: 'line-3',
+    title: 'Distibution des rôles',
+    top: '70%',
+    left: '43%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Distibution des rôles.',
+  },
+  {
+    id: 'line-4',
+    title: 'Kikoff',
+    top: '85%',
+    left: '43%',
+    width: '2%',
+    angle: 0,
+    details: 'Details for Kikoff.',
+  }
+];
 
 const Path = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [selectedDivisions, setSelectedDivisions] = useState<number[]>([]);
-  const [isOpaqueHover, setIsOpaqueHover] = useState(false);
-
+  const [activeLineId, setActiveLineId] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-
-  const divisions = [
-    { id: 1, label: 'Division 1', color: '#FF6B6B' },
-    { id: 2, label: 'Division 2', color: '#4ECDC4' },
-    { id: 3, label: 'Division 3', color: '#45B7D1' },
-    { id: 4, label: 'Division 4', color: '#FFA07A' },
-  ];
-
-  useEffect(() => {
-    const img = imgRef.current;
-    if (!img) return;
-
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
-    if (!ctx) return;
-
-    const drawToCanvas = () => {
-      if (!img.naturalWidth || !img.naturalHeight) return;
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.drawImage(img, 0, 0);
-      canvasRef.current = canvas;
-    };
-
-    if (img.complete && img.naturalWidth) {
-      drawToCanvas();
-    } else {
-      img.addEventListener('load', drawToCanvas);
-    }
-
-    return () => {
-      img.removeEventListener('load', drawToCanvas);
-    };
-  }, []);
-
-  const handleImageClick = () => {
-    if (isOpaqueHover) {
-      setShowModal(true);
-    }
-  };
-
-  const handleMouseMove: React.MouseEventHandler<HTMLImageElement> = (e) => {
-    const img = imgRef.current;
-    const canvas = canvasRef.current;
-    if (!img || !canvas) {
-      setIsOpaqueHover(false);
-      return;
-    }
-    const rect = img.getBoundingClientRect();
-    const relX = e.clientX - rect.left;
-    const relY = e.clientY - rect.top;
-    if (relX < 0 || relY < 0 || relX > rect.width || relY > rect.height) {
-      setIsOpaqueHover(false);
-      return;
-    }
-    const sx = Math.floor((relX / rect.width) * canvas.width);
-    const sy = Math.floor((relY / rect.height) * canvas.height);
-    const ctx = canvas.getContext('2d');
-    if (!ctx) {
-      setIsOpaqueHover(false);
-      return;
-    }
-    const data = ctx.getImageData(sx, sy, 1, 1).data;
-    const alpha = data[3];
-    setIsOpaqueHover(alpha > 10); // threshold to ignore near-transparent pixels
-  };
-
-  const handleMouseLeave = () => setIsOpaqueHover(false);
-
-  const handleDivisionToggle = (id: number) => {
-    setSelectedDivisions((prev) =>
-      prev.includes(id) ? prev.filter((d) => d !== id) : [...prev, id]
-    );
-  };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setActiveLineId(null);
   };
+
+  const activeLine = lineHotspots.find((line) => line.id === activeLineId) || null;
 
   return (
     <>  
       <div className="main-content">
         <div className="image-container">
-          <img 
-            src="src/assets/IMG_2037.png" 
-            id="cheminement" 
+          <img
+            src="src/assets/Untitled9_20260130094710.png"
+            id="cheminement"
             alt="pousse"
             ref={imgRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            onClick={handleImageClick}
-            className={`glow-image ${isOpaqueHover ? 'glow-active' : ''}`}
+            className="path-image"
           />
+          <div className="line-overlay" aria-hidden="true">
+            <svg className="connector-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+              {/* Line from line-1-0 (30%, 44%) to line-2 (43%, 60%) */}
+              <path d="M 30 44 L 43 44 L 43 60" className="connector-path" />
+              {/* Line from line-1-1 (37%, 35%) to line-2 (43%, 60%) */}
+              <path d="M 37 35 L 43 35 L 43 60" className="connector-path" />
+              {/* Line from line-1-2 (50%, 35%) to line-2 (43%, 60%) */}
+              <path d="M 50 35 L 43 35 L 43 60" className="connector-path" />
+              {/* Line from line-1-3 (57%, 44%) to line-2 (43%, 60%) */}
+              <path d="M 57 44 L 43 44 L 43 60" className="connector-path" />
+              {/* Line from line-2 (43%, 60%) to line-4 (43%, 85%) */}
+              <path d="M 43 60 L 43 85" className="connector-path" />
+            </svg>
+            {lineHotspots.map((line) => (
+              <button
+                key={line.id}
+                type="button"
+                className="line-hotspot"
+                style={{
+                  top: line.top,
+                  left: line.left,
+                  width: line.width,
+                  transform: `translate(-50%, -50%) rotate(${line.angle ?? 0}deg)`,
+                }}
+                onClick={() => setActiveLineId(line.id)}
+                aria-label={`Open ${line.title}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      {showModal && (
+      {activeLine && (
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <div className="modal-header">
-              <h2>Select Divisions</h2>
+              <h2>{activeLine.title}</h2>
               <button className="close-btn" onClick={handleCloseModal}>✕</button>
             </div>
-            
-            <div className="divisions-grid">
-              {divisions.map((division) => (
-                <div
-                  key={division.id}
-                  className={`division-option ${selectedDivisions.includes(division.id) ? 'selected' : ''}`}
-                  style={{
-                    borderColor: division.color,
-                    backgroundColor: selectedDivisions.includes(division.id) ? `${division.color}20` : 'transparent'
-                  }}
-                  onClick={() => handleDivisionToggle(division.id)}
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedDivisions.includes(division.id)}
-                    onChange={() => handleDivisionToggle(division.id)}
-                  />
-                  <label>{division.label}</label>
-                </div>
-              ))}
+            <div className="modal-body">
+              <p>{activeLine.details}</p>
             </div>
-
             <div className="modal-footer">
-              <button className="btn-cancel" onClick={handleCloseModal}>Cancel</button>
-              <button className="btn-confirm" onClick={handleCloseModal}>Confirm</button>
+              <button className="btn-confirm" onClick={handleCloseModal}>Close</button>
             </div>
           </div>
         </div>

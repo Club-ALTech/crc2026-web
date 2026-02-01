@@ -29,6 +29,10 @@ const App = () => {
     setCurrentPage(pages[nextIndex]);
   }
 
+  const setLanguage = () => {
+    console.log('Language toggled');
+  }
+
   return (
     <>
       <div className='header'>
@@ -47,6 +51,9 @@ const App = () => {
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('rules')}>
             Rules
+          </div>
+          <div className='change-language menu-button' onClick={() => setLanguage()}>
+            FR/EN
           </div>
         </div>
       </div>
