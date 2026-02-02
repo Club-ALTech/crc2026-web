@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import Home from './assets/compsants/home';
 import Game from './assets/compsants/game';
 import Path from './assets/compsants/path';
@@ -6,6 +7,7 @@ import Rules from './assets/compsants/rules';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
+  const { i18n, t } = useTranslation();
 
   const renderComponent = () => {
     switch (currentPage) {
@@ -30,30 +32,36 @@ const App = () => {
   }
 
   const setLanguage = () => {
-    console.log('Language toggled');
+    const nextLanguage = i18n.language === 'fr' ? 'en' : 'fr';
+    i18n.changeLanguage(nextLanguage);
   }
+
+  useEffect(() => {
+    document.title = t('siteTitle');
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language, t]);
 
   return (
     <>
       <div className='header'>
         <div id="floting-menu">
           <div className='logo'>
-            <img src="src/assets/IMG_2037.png" id='logo' alt="Logo" onClick={() => setCurrentPage('home')} />
+            <img src="src/assets/IMG_2037.png" id='logo' alt={t('common.logoAlt')} onClick={() => setCurrentPage('home')} />
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('home')}>
-            Home
+            {t('nav.home')}
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('game')}>
-            Mini game
+            {t('nav.videos')}
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('path')}>
-            Path
+            {t('nav.path')}
           </div>
           <div className='menu-button' onClick={() => setCurrentPage('rules')}>
-            Rules
+            {t('nav.rules')}
           </div>
           <div className='change-language menu-button' onClick={() => setLanguage()}>
-            FR/EN
+            {t('nav.languageToggle')}
           </div>
         </div>
       </div>
@@ -61,7 +69,7 @@ const App = () => {
         {renderComponent()}
       </main>
       <div className="footer">
-        <button id="button-changepage" onClick={() => goNextPage()}>Next page</button>
+        <button id="button-changepage" onClick={() => goNextPage()}>{t('footer.nextPage')}</button>
       </div>
     </>
   );
